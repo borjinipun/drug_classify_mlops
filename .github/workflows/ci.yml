@@ -14,12 +14,21 @@ jobs:
       - uses: actions/checkout@v3
       - uses: iterative/setup-cml@v2
       - name: Install Packages
-        run: make install
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
       - name: Format
-        run: make format
+        run: |
+          black *.py
       - name: Train
-        run: make train
+        run: |
+          python train.py
       - name: Evaluation
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: make eval
+        run: |
+          echo "## Model Metrics" > report.md
+          cat ./Results/metrics.txt >> report.md
+          echo '\n## Confusion Matrix Plot' >> report.md
+          echo '![Confusion Matrix](./Results/model_results.png)' >> report.md
+          cml comment create report.md
