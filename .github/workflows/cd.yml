@@ -22,5 +22,5 @@ jobs:
             pip install -U "huggingface_hub[cli]"
             huggingface-cli login --token "${HF}" --add-to-git-credential
             huggingface-cli upload borjinipun/Drug_Classify ./App --repo-type=space --commit-message="Sync App files"
-            huggingface-cli upload borjinipun/Drug_Classify ./Model --repo-type=space --commit-message="Sync Model"
-            huggingface-cli upload borjinipun/Drug_Classify ./Results --repo-type=space --commit-message="Sync Model"
+            huggingface-cli upload borjinipun/Drug_Classify ./Model /Model --repo-type=space --commit-message="Sync Model"
+            huggingface-cli upload borjinipun/Drug_Classify ./Results /Metrics --repo-type=space --commit-message="Sync Model"
