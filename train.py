@@ -10,7 +10,12 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OrdinalEncoder, StandardScaler
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import (
+    accuracy_score,
+    f1_score,
+    confusion_matrix,
+    ConfusionMatrixDisplay,
+)
 
 import skops.io as sio
 
@@ -55,16 +60,9 @@ def main():
     accuracy = accuracy_score(y_test, predictions)
     f1 = f1_score(y_test, predictions, average="macro")
 
-    print(
-        "Accuracy:",
-        f"{round(accuracy, 2) * 100}%",
-        "F1:",
-        round(f1, 2)
-    )
+    print("Accuracy:", f"{round(accuracy, 2) * 100}%", "F1:", round(f1, 2))
     with open("Results/metrics.txt", "w") as outfile:
-        outfile.write(
-            f"\nAccuracy = {round(accuracy, 2)}, F1 Score = {round(f1, 2)}."
-        )
+        outfile.write(f"\nAccuracy = {round(accuracy, 2)}, F1 Score = {round(f1, 2)}.")
 
     cm = confusion_matrix(y_test, predictions, labels=pipe.classes_)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=pipe.classes_)
