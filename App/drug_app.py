@@ -1,7 +1,20 @@
 import gradio as gr
 import skops.io as sio
 
-pipe = sio.load("./Model/drug_pipeline.skops", trusted=True)
+# Explicitly specify trusted types
+trusted_types = [
+    "sklearn.pipeline.Pipeline",
+    "sklearn.preprocessing.OneHotEncoder",
+    "sklearn.preprocessing.StandardScaler",
+    "sklearn.compose.ColumnTransformer",
+    "sklearn.preprocessing.OrdinalEncoder",
+    "sklearn.impute.SimpleImputer",
+    "sklearn.tree.DecisionTreeClassifier",
+    "sklearn.ensemble.RandomForestClassifier",
+    "numpy.dtype",
+]
+
+pipe = sio.load("./Model/drug_pipeline.skops", trusted=trusted_types)
 
 
 def predict_drug(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
@@ -43,8 +56,10 @@ examples = [
 
 title = "Drug Classification"
 description = "Enter the details to correctly identify Drug type?"
-article = "This app is a part of the Beginner's Guide to CI/CD for Machine Learning. It teaches how to automate training, evaluation, and deployment of models to Hugging Face using GitHub Actions."
-
+article = (
+    "This app predicts the type of drug based on patient features. "
+    "It uses a machine learning model trained on a dataset of patient records."
+)
 
 gr.Interface(
     fn=predict_drug,
